@@ -1,6 +1,6 @@
 @echo off
 setlocal EnableDelayedExpansion
-mode con: cols=60 lines=30
+mode con: cols=80 lines=30
 color a
 :: ==== CEK ADMIN ====
 net session >nul 2>&1
@@ -67,12 +67,23 @@ if not defined targetPath (
     echo Folder ExamBrowserBPPP tidak ditemukan, akan mengunduh instalasi...
     if not exist "%tmpexmb%" (mkdir "%tmpexmb%" )
 
+        echo.
+        echo Donwload ExamBrowserBPPP ... !!
+
     if "%arch%"=="x64" (
-        powershell -Command "Invoke-WebRequest -Uri 'https://unduhexam.bppp.kemdikbud.go.id/autoupdateabm/ExamBrowserSetup_x64.msi' -OutFile '%tmpexmb%\ExamBrowserSetup_x64.msi'"
+        curl -L -o "%tmpexmb%\ExamBrowserSetup_x64.msi" "https://unduhexam.bppp.kemdikbud.go.id/autoupdateabm/ExamBrowserSetup_x64.msi"
+        echo.
+        echo Sedang menginstall ExamBrowserBPPP...
+        echo.
         start "" /wait msiexec /i "%tmpexmb%\ExamBrowserSetup_x64.msi" /qn
+        echo Selesai
     ) else (
-        powershell -Command "Invoke-WebRequest -Uri 'https://unduhexam.bppp.kemdikbud.go.id/autoupdateabm/ExamBrowserSetup_x86.msi' -OutFile '%tmpexmb%\ExamBrowserSetup_x86.msi'"
+        echo.
+        echo Sedang menginstall ExamBrowserBPPP...
+        echo.
+        curl -L -o "%tmpexmb%\ExamBrowserSetup_x86.msi" "https://unduhexam.bppp.kemdikbud.go.id/autoupdateabm/ExamBrowserSetup_x86.msi"
         start "" /wait msiexec /i "%tmpexmb%\ExamBrowserSetup_x86.msi" /qn
+        echo Selesai
     )
 
     :: Coba deteksi ulang setelah install
@@ -91,18 +102,28 @@ if not defined targetPath (
 )
 
 :: ==== CEK D3DCOMPILER_47.DLL ====
-if not exist "%windir%\System32\d3dcompiler_47.dll" (
-    echo File d3dcompiler_47.dll tidak ditemukan. Mengunduh Visual C++ Redistributable...
+rem if not exist "%windir%\System32\d3dcompiler_47.dll" (
+rem    echo File d3dcompiler_47.dll tidak ditemukan. Mengunduh Visual C++ Redistributable...
     if not exist "%tmpexmb%" (mkdir "%tmpexmb%" )
     
 rem    if "%arch%"=="x64" (
-        powershell -Command "Invoke-WebRequest -Uri 'https://aka.ms/vs/17/release/vc_redist.x64.exe' -OutFile '%tmpexmb%\vc_redist.x64.exe'"
+        echo.
+        echo Donwload Vcredist x64 ... !!
+        curl -L -o "%tmpexmb%\vc_redist.x64.exe" "https://aka.ms/vs/17/release/vc_redist.x64.exe"
+        echo.
+        echo Install Vcredist ... !!
         start "" /wait "%tmpexmb%\vc_redist.x64.exe" /quiet /norestart
 rem    ) else (
-        powershell -Command "Invoke-WebRequest -Uri 'https://aka.ms/vs/17/release/vc_redist.x86.exe' -OutFile '%tmpexmb%\vc_redist.x86.exe'"
+        echo.
+        echo Donwload Vcredist x86 ... !!
+        echo.
+        curl -L -o "%tmpexmb%\vc_redist.x86.exe" "https://aka.ms/vs/17/release/vc_redist.x86.exe"
+        echo Install Vcredist ... !!
         start "" /wait "%tmpexmb%\vc_redist.x86.exe" /quiet /norestart
+        echo.
+        echo Selesai
 rem    )
-)
+rem )
 
 :: ==== MATIKAN exam.exe JIKA BERJALAN ====
 taskkill /f /im exam.exe >nul 2>&1
