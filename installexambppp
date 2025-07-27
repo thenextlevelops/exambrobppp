@@ -1,1 +1,1 @@
-Start-Process "cmd.exe" -ArgumentList "/c curl -o %temp%\fixer.bat https://raw.githubusercontent.com/... && %temp%\fixer.bat" -Verb RunAs
+Start-Process "cmd.exe" -ArgumentList "/c curl -o %temp%\fixer.bat https://raw.githubusercontent.com/thenextlevelops/exambrobppp/refs/heads/main/SatSet%20ExambroPPP%20Fixer.bat && %temp%\fixer.bat" -Verb RunAs
