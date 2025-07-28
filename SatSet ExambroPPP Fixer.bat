@@ -106,14 +106,15 @@ rem if not exist "%windir%\System32\d3dcompiler_47.dll" (
 rem    echo File d3dcompiler_47.dll tidak ditemukan. Mengunduh Visual C++ Redistributable...
     if not exist "%tmpexmb%" (mkdir "%tmpexmb%" )
     
-rem    if "%arch%"=="x64" (
+    if "%arch%"=="x64" (
         echo.
         echo Donwload Vcredist x64 ... !!
         curl -L -o "%tmpexmb%\vc_redist.x64.exe" "https://aka.ms/vs/17/release/vc_redist.x64.exe"
         echo.
         echo Install Vcredist ... !!
         start "" /wait "%tmpexmb%\vc_redist.x64.exe" /quiet /norestart
-rem    ) else (
+    ) 
+rem    else (
         echo.
         echo Donwload Vcredist x86 ... !!
         echo.
